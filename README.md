@@ -1,4 +1,3 @@
-
 ## Transcriptome Models: 
 #### Multi-Ethic Study of Atherosclerosis (MESA)
 1. ALL model: European, African American, and Hispanic populations combined
@@ -14,6 +13,7 @@
 - Body mass index, chronic kidney disease, c-reactive protein levels, type-II diabetes, diastolic blood pressure, end-renal kidney failure, fasting insulin, fasting glucose, glomerular filtration estimation rate, hemoglobin levels, hypertension, HDL cholesterol, LDL cholesterol, height, QT interval, QRS duration, PR interval, platelet count, coffee consumption, smoking behavior, total cholesterol, mean corpuscular hemoglobin concentration, triglyceride levels, white blood cell (WBC) count, waist-hip ratio in males, waist-hip ratio in females, and waist-hip ratio. 
 
 
+## Scripts: 
 ### 01: Run S-PrediXcan with the GWAS Summary Statistics from the study.
 *Note that these files were accessed before the availability of the harmonised form.*
 
