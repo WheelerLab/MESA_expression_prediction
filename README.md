@@ -1,10 +1,7 @@
 ## Transcriptome Models: 
 #### Multi-Ethic Study of Atherosclerosis (MESA)
-1. ALL model: European, African American, and Hispanic populations combined
-2. AFA model: African American population, n = 233
-3. AFHI model: African American population and Hispanic population combined
-4. HIS model: Hispanic population, n = 352
-5. EUR (CAU) model: European population, n = 578
+1. AFHI model: African American population and Hispanic population combined
+2. EUR (CAU) model: European population, n = 578
 
 
 ## [GWAS Catalog](https://www.ebi.ac.uk/gwas/publications/31217584)
