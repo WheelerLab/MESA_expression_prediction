@@ -1,6 +1,6 @@
 ## Transcriptome Models: 
 #### Multi-Ethic Study of Atherosclerosis (MESA)
-1. AFHI model: African American population and Hispanic population combined
+1. AFHI model: African American population and Hispanic population combined, n = 585
 2. EUR (CAU) model: European population, n = 578
 
 
@@ -11,21 +11,21 @@
 
 
 ## Scripts: 
-### 01: Run S-PrediXcan with the GWAS Summary Statistics from the study.
+#### 01: Run S-PrediXcan with the GWAS Summary Statistics from the study.
 *Note that these files were accessed before the availability of the harmonised form.*
 
-### 02: Generate Manhattan and QQ plots for each of the S-PrediXcan tests. 
+#### 02: Generate Manhattan and QQ plots for each of the S-PrediXcan tests. 
 
-### 03: Generate barplots to display S-PrediXcan significant genes results.
+#### 03: Generate barplots to display S-PrediXcan significant genes results.
 
-### 04: Combine all of the significant genes files together
+#### 04: Combine all of the significant genes files together
 
-### 05: Check if the new harmonised data released by GWAS Catalog matches the old GWAS Summary Statistics data and output by running S-PrediXcan on the White Blood Cell Count phenotype.
+#### 05: Check if the new harmonised data released by GWAS Catalog matches the old GWAS Summary Statistics data and output by running S-PrediXcan on the White Blood Cell Count phenotype.
 
-### 06-09: Preliminary script to properly format the input for LOCUS Comparer. 
+#### 06-09: Preliminary script to properly format the input for LOCUS Comparer. 
 
-### 10: Run Locus Comparer with eQTL and GWAS data to depict LD.
+#### 10: Run Locus Comparer with eQTL and GWAS data to depict LD.
 
-### 11: Merge the Locus Compare Plots for each Population into a pdf.
+#### 11: Merge the Locus Compare Plots for each Population into a pdf.
 
-### 12: Merge PhenomeXcan files and create PhenomeXcan Table for AFHI and EUR results.
+#### 12: Merge PhenomeXcan files and create PhenomeXcan Table for AFHI and EUR results.
