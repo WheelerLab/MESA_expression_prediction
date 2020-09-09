@@ -1,3 +1,5 @@
+## Zenodo Repository: https://zenodo.org/record/4015236#.X1kj_3lKjD4
+
 ## Transcriptome Models: 
 #### Multi-Ethic Study of Atherosclerosis (MESA)
 1. AFHI model: African American population and Hispanic population combined, n = 585
