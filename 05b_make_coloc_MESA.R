@@ -6,7 +6,7 @@ library(R.utils)
 phenos <- c("Height")
 chrs <- c(1:22)
 pops <- c("AFA", "CAU", "HIS", "AFHI", "ALL") #do combined pops later
-pops_sample_size <- c(233, 578, 352, 585, 1163) #R doesn't have dicts so we're doing it a slgihtly more ratchet way
+pops_sample_size <- c(233, 578, 352, 585, 1163) 
 sig_gene_SNPs <- fread("/home/elyse/GWAS_Height_SNPs.txt", header = F) #so we don't run all the SNPs b/c it takes forever
 sig_gene_SNPs <- sig_gene_SNPs$V1
 
@@ -39,7 +39,7 @@ for(pop in 1:length(pops)){ #read in pop's .frq file for MAF
       eQTL_write <- rbind(eQTL_write, meQTL_for_COLOC)
     }
 
-    snps_in_both <- intersect(GWAS_write$panel_variant_id, eQTL_write$variant_id) #is there a better way to do this? Probably. Do I feel like figuring it out? Nah.
+    snps_in_both <- intersect(GWAS_write$panel_variant_id, eQTL_write$variant_id) 
     snps_in_all <- intersect(snps_in_both, sig_gene_SNPs)
     GWAS_write <- subset(GWAS_write, panel_variant_id %in% snps_in_all)
     eQTL_write <- subset(eQTL_write, variant_id %in% snps_in_all)
