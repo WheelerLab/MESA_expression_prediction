@@ -66,7 +66,7 @@ sig_gene_SNPs <- sig_gene_SNPs$V1
       eQTL_write <- rbind(eQTL_write, meQTL_for_COLOC)
     }
 
-    snps_in_both <- intersect(GWAS_write$panel_variant_id, eQTL_write$variant_id) #is there a better way to do this? Probably. Do I feel like figuring it out? Nah.
+    snps_in_both <- intersect(GWAS_write$panel_variant_id, eQTL_write$variant_id) \
     snps_in_all <- intersect(snps_in_both, sig_gene_SNPs)
     GWAS_write <- subset(GWAS_write, panel_variant_id %in% snps_in_all)
     eQTL_write <- subset(eQTL_write, variant_id %in% snps_in_all)
