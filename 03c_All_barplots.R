@@ -53,7 +53,7 @@ for(pheno in phenotypes){
 }
 print(sig_hits)
 write.table(sig_hits, 'sig_hits_plotting.txt', quote= F, row.names=F, sep ='\t')
-sig_hits <- sig_hits %>% filter(mod == 'AFHI' | mod == 'CAU')
+sig_hits <- sig_hits %>% filter(mod == 'AFHI' | mod == 'CAU' | mod == 'ALL')
 sig_hits$mod <- str_replace_all(sig_hits$mod, 'CAU', 'EUR')
 write.table(sig_hits, 'sig_hits_plotting_PAPER.txt', quote=F, row.names=F, sep='\t')
 #mycolors = c(brewer.pal(name="Dark2", n = 8), brewer.pal(name="Paired", n = 10))
