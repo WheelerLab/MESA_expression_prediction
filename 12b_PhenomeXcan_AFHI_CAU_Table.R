@@ -14,7 +14,7 @@ Phenom <- Phenom %>% select(gene_name, Trait, `P-value`, RCP)
 SPred <- fread('/home/egeoffroy/Summary_Statistics/Summary_Stats/Wojcik/sig_genes_all_pheno.csv', sep=',', header =T, stringsAsFactors=F)
 print(names(SPred))
 SPred <- SPred %>% select(GENE, gene_name, CHR, Phenotype, Model, effect_size, P)
-SPred <- SPred %>% filter(Model == 'AFHI' | Model == 'CAU') #CAU = EUR
+SPred <- SPred %>% filter(Model == 'AFHI' | Model == 'CAU' | Model == 'ALL') #CAU = EUR
 SPred$Model <- str_replace_all(SPred$Model, 'CAU', 'EUR')
 #SPred <- SPred %>% filter(p4 > 0.5)
 SPred$Phenotype <- str_replace(SPred$Phenotype, '53', '')
