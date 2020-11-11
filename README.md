@@ -5,7 +5,7 @@
 #### Multi-Ethic Study of Atherosclerosis (MESA)
 1. AFHI model: African American population and Hispanic population combined, n = 585
 2. EUR (CAU) model: European population, n = 578
-
+3. ALL model: African American population, Hispanic population, and European population combined, n = 1163
 
 ## [GWAS Catalog](https://www.ebi.ac.uk/gwas/publications/31217584)
 ### GWAS Summary Statistics Tested:
