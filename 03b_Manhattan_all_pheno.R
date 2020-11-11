@@ -228,3 +228,105 @@ p1 <- ggplot(output, aes(x = BPcum, y = -log10(P),
     axis.text.x = element_text(angle = 90, size = 8, vjust = 0.5)
   ) + ggsave('Manhattan_total_phenotype_1e7_inordermax.png',device='png', width = 12, height = 6)
 print(output)
+
+output <- read.table('/home/egeoffroy/AFHI_EUR_ALL_sig_genes.txt', header = T, sep = '\t', stringsAsFactors=F)
+print(tail(output))
+#axis.set <- output %>%
+#  group_by(CHR) %>%
+#  summarize(center = (max(BP) + min(BP)) / 2)
+ylim <- abs(floor(log10(min(output$P)))) + 2
+sig <- 1.1e-7 #1.7e-7
+
+# Prepare the dataset
+#output <- output %>%
+  # Compute chromosome size
+  #group_by(CHR) %>%
+  #summarise(chr_len=max(BP)) %>%
+  # Calculate cumulative position of each chromosome
+  #mutate(tot=cumsum(chr_len)-chr_len) %>%
+  #select(-chr_len) %>%
+  # Add this info to the initial dataset
+  #left_join(output, ., by=c("CHR"="CHR")) %>%
+  # Add a cumulative position of each SNP
+#  arrange(CHR, BP) %>%
+ # mutate(BPcum=BP+tot) %>%
+  # Add highlight and annotation information
+ # mutate( is_highlight=ifelse(SNP %in% snpsOfInterest, "yes", "no")) %>%
+  # Filter SNP to make the plot lighter
+#  filter(-log10(P)>0.5)
+#output <- output %>% filter(-log10(P) > 0.5)
+signif <- output %>% filter(-log10(P) > -log10(sig))
+print(signif)
+AFHI <- signif %>% filter(Model == 'AFHI')
+ALL <- signif %>% filter(Model == 'ALL')
+CAU <- signif %>% filter(Model == 'EUR')
+print(nrow(AFHI))
+print(nrow(ALL))
+print(nrow(CAU))
+axisdf <- output %>% group_by(CHR) %>% summarize(center=(max(BPcum) + min(BPcum)) / 2 )
+output <- mutate(output, Phenotype=ifelse(Phenotype=="Mean corpuscular hemoglobin","MCHC",Phenotype),
+                 Phenotype=ifelse(Phenotype=="C-reactive protein levels","CRP levels",Phenotype))
+positions <- c('WBC count', 'Platelet count', 'MCHC', 'CRP levels', 'Height', 'QRS duration', 'PR interval' , 'QT interval', 'Diabetes', 'Triglyceride', 'LDL cholesterol', 'HDL cholesterol', 'Total cholesterol', 'Fasting glucose' )
+output$Phenotype <- factor(output$Phenotype, levels = positions)
+#colorsss <- c("#7570B3" ,"#E7298A", "#66A61E", "#E6AB02" ,"#A6761D", "#666666", "#A6CEE3", "#1F78B4", "#B2DF8A","#1B9E77", "#D95F02", "#33A02C", "#FB9A99")
+colorsss <- c("#A6CEE3", "#1F78B4", "#B2DF8A", "#33A02C", "#FB9A99", "#E31A1C", "#FDBF6F", "#FF7F00", "#CAB2D6", "#6A3D9A", "#276419", "#B15928", "#000000", "#8E0152")
+print(nrow(output))
+print(unique(output$Model))
+output$Model <- factor(output$Model, levels = c('AFHI', 'EUR', 'ALL'))
+modoutput <- mutate(output, log10 = ifelse(-log10(P)>30, 30, -log10(P)))
+
+
+ggplot(modoutput, aes(x = BPcum, y = log10,
+                   color = Phenotype, shape = Phenotype)) + facet_wrap(~Model, nrow = 3)+
+  geom_point(alpha = 4) +
+  geom_hline(yintercept = -log10(sig), color = "grey40", linetype = "dashed") +
+  scale_x_continuous(label = axisdf$CHR, breaks = axisdf$center) + scale_shape_manual(values=c(15,16,17,18,4,5,6,7,8,9,10,15,16,17)) +
+  scale_color_manual(values = wes_palette("Zissou1", 14, type = "continuous")) +
+  scale_size_continuous(range = c(0.5,3)) +
+  labs(x = "chromosome",
+       y = "-log10(p)") +
+  theme_minimal() +
+  theme( legend.position = 'right', legend.title = element_text(size = 12), legend.text = element_text(size = 8), strip.text = element_text(size=12),
+         panel.border = element_blank(),
+         panel.grid.major.x = element_blank(),
+         panel.grid.minor.x = element_blank(),
+         axis.text.x = element_text(angle = 90, size = 8, vjust = 0.5),
+         axis.text.y = element_text(size = 8),
+         axis.title = element_text(size = 12)
+  ) + ggsave('Manhattan_ALL_total_phenotype_P_30.tiff',device='tiff', width = 8, height = 4)
+
+#subset to the Bonf per trait threshold
+#AFHI predicts the expression of 5,557 genes while EUR predicts expression of 4,675 genes and ALL
+#predicts expression of 6,218 genes. We carried gene-trait pairs that met this threshold forward
+#to colocalization analysis. To show some genes meet a more conservative threshold, we also applied
+#a second threshold to correct for the total number of tests performed (P < 0.05/(5557*28 + 4675*28 + 6218*28) =  P < 1.1e-07).
+
+afhiP <- 0.05/5557
+eurP <- 0.05/4675
+allP <- 0.05/6218
+
+#NOTE: I'm not sure these numbers match up with what's in the paper (check Table S1)
+afhi <- filter(output,Model=="AFHI",P<afhiP)
+eur <- filter(output, Model=="EUR",P<eurP)
+all <- filter(output, Model=="ALL",P<allP)
+
+bonf <- rbind(afhi,eur,all)
+bonf<- mutate(bonf, log10 = ifelse(-log10(P)>50, 50, -log10(P)))
+ggplot(bonf, aes(x = BPcum, y = log10,
+                      color = Phenotype, shape = Phenotype)) + facet_wrap(~Model, nrow = 3)+
+  geom_point() +
+  geom_hline(yintercept = -log10(sig), color = "red", linetype = "dashed") +
+  scale_x_continuous(label = axisdf$CHR, breaks = axisdf$center) + scale_shape_manual(values=c(15,16,17,18,4,5,6,7,8,9,10,15,16,17)) +
+  scale_color_viridis_d() +
+  scale_size_continuous(range = c(0.5,3)) +
+  labs(x = "chromosome",
+       y = "-log10(p)") +
+  theme_minimal() +
+  theme( legend.position = 'right', legend.title = element_text(size = 12), legend.text = element_text(size = 10), strip.text = element_text(size=10),
+         panel.border = element_blank(),
+         panel.grid.major.x = element_blank(),
+         panel.grid.minor.x = element_blank(),
+         axis.text.x = element_text(angle = 90, size = 10, vjust = 0.5),
+         axis.text.y = element_text(size = 10),
+         axis.title = element_text(size = 14)
+  ) + ggsave('Manhattan_Bonf_genes_only.tiff',device='tiff', width = 7, height = 5)
